@@ -1,9 +1,6 @@
 import 'package:el3asema_news/core/const/colors.dart';
 import 'package:el3asema_news/core/const/imports.dart';
-import 'package:el3asema_news/feature/art_screen/presentation/screen/art.dart';
 import 'package:el3asema_news/feature/auth/presentation/screen/prfile.dart';
-import 'package:el3asema_news/feature/movie_screen/presentation/screen/movie_screen.dart';
-import 'package:el3asema_news/feature/sport_screen/presentation/screen/sport_screen.dart';
 
 List<Widget> screens = [const HomeScreen(), const ProfileScreen()];
 

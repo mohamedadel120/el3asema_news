@@ -184,12 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
  */
 
-import 'dart:developer';
 
 import 'package:el3asema_news/core/const/colors.dart';
 import 'package:el3asema_news/core/const/imports.dart';
 import 'package:el3asema_news/feature/art_screen/presentation/screen/art.dart';
-import 'package:el3asema_news/feature/auth/presentation/screen/prfile.dart';
 import 'package:el3asema_news/feature/home_screen/data/models/local_models/news.dart';
 import 'package:el3asema_news/feature/home_screen/presentation/screen/details_screen.dart';
 import 'package:el3asema_news/feature/home_screen/presentation/shared/item_news.dart';

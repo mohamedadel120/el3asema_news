@@ -1,48 +1,85 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:el3asema_news/core/const/colors.dart';
+import 'package:el3asema_news/core/const/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomFormField extends StatelessWidget {
+
+class AppTextFormField extends StatelessWidget {
+  final EdgeInsetsGeometry? contentPadding;
+  final InputBorder? focusedBorder;
+  final InputBorder? enabledBorder;
+  final TextStyle? inputTextStyle;
+  final TextStyle? hintStyle;
   final String hintText;
-  final TextEditingController controller;
-  bool? obscureText;
-  TextInputType? keyboardType;
-  Widget? prefixIcon;
-  Widget? suffixIcon;
-  CustomFormField({
+  final bool? isObscureText;
+  final Widget? suffixIcon;
+  final Color? backgroundColor;
+  final TextEditingController? controller;
+  final Function(String?) validator;
+  const AppTextFormField({
     super.key,
+    this.contentPadding,
+    this.focusedBorder,
+    this.enabledBorder,
+    this.inputTextStyle,
+    this.hintStyle,
     required this.hintText,
-    required this.controller,
-    this.obscureText,
-    this.keyboardType,
-    this.prefixIcon,
+    this.isObscureText,
     this.suffixIcon,
+    this.backgroundColor,
+    this.controller,
+    required this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: TextFormField(
-        obscureText: obscureText ?? false,
-        controller: controller,
-        keyboardType: keyboardType ?? TextInputType.text,
-        decoration: InputDecoration(
-          hintText: hintText,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          filled: true,
-          fillColor: Colors.grey[200],
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0 * 1.5, vertical: 16.0),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding: contentPadding ??
+            EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
+        focusedBorder: focusedBorder ??
+            OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: AppColors.primaryColor,
+                width: 1.3,
+              ),
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+        enabledBorder: enabledBorder ??
+            OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: AppColors.lighterGray,
+                width: 1.3,
+              ),
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 1.3,
           ),
+          borderRadius: BorderRadius.circular(16.0),
         ),
-        onSaved: (passaword) {
-          // Save it
-        },
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 1.3,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        hintStyle: hintStyle ?? TextStyles.font14LightGrayRegular,
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        fillColor: backgroundColor ?? AppColors.moreLightGray,
+        filled: true,
       ),
+      obscureText: isObscureText ?? false,
+      style: TextStyles.font14DarkBlueMedium,
+      validator: (value) {
+        return validator(value);
+      },
     );
   }
 }
