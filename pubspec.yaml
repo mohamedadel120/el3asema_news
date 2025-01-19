@@ -2,7 +2,7 @@ name: el3asema_news
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -29,30 +29,56 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cached_network_image: ^3.4.1
+  # A set of iOS style icons for use in Flutter apps.
   cupertino_icons: ^1.0.8
+  # The Flutter SDK itself.
   flutter:
     sdk: flutter
+  # A Flutter plugin for adapting screen and font size.
   flutter_screenutil: ^5.9.3
+  # A Flutter widget to draw SVG (Scalable Vector Graphics) files.
   flutter_svg: ^2.0.14
+  # A Flutter package for using Iconly icons.
   iconly: ^1.0.1
+  # A Flutter package for rendering Lottie animations.
   lottie: ^3.1.3
+  #Built to be used with the bloc state management package.
+  flutter_bloc: ^9.0.0
+  #A powerful HTTP networking package for Flutter.
+  dio: ^5.7.0
+  #A build system for Dart code generation and modular compilation.
+  build_runner: ^2.4.14
+  #Annotations for the freezed code-generator. This package does nothing without freezed too.
+  freezed_annotation: ^2.4.4
+  #Simple direct Service Locator that allows to decouple the interface from a concrete
+  get_it: ^8.0.3
+  #Classes and helper functions that support JSON code generation via the `json_serializable` package.
+  json_annotation: ^4.9.0
+  #Automatically generate code for converting to and from JSON by annotating Dart classes.
+  json_serializable: ^6.9.3
+  #Pretty Dio logger is a Dio interceptor that logs network calls in a pretty.
+  pretty_dio_logger: ^1.4.0
+  #is an dio client generator using source_gen and inspired by Chopper and Retrofit.
+  retrofit: ^4.4.1
+  #retrofit generator is an dio client generator using source_gen and inspired by Chopper and Retrofit.
+  retrofit_generator: ^9.1.4
+  #reading and writing simple key-value pairs.
+  shared_preferences: ^2.3.5
+  #Flutter Secure Storage provides API to store data in secure storage.
+  flutter_secure_storage: ^9.2.2
+  #Customize Flutter's default white native splash screen with background color and splash image.
+  flutter_native_splash: ^2.4.4
+
 
 dev_dependencies:
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-
+  freezed: ^2.5.7
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
