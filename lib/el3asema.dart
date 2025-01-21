@@ -1,6 +1,4 @@
 import 'package:el3asema_news/core/helpers/constance.dart';
-import 'package:el3asema_news/core/helpers/extensions.dart';
-import 'package:el3asema_news/core/helpers/shared_pref.dart';
 import 'package:el3asema_news/core/routes/routes_cosnt.dart';
 import 'package:el3asema_news/core/routes/app_routers.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +25,7 @@ class El3asemaApp extends StatelessWidget {
           location: BannerLocation.bottomStart,
         ),
         onGenerateRoute: appRouter.generateRoute,
-        initialRoute: Routes.loginScreen,
+        initialRoute:isLoggedInUser?Routes.bottomNavScreen :Routes.loginScreen,
       ),
     );
   }

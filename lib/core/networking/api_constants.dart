@@ -1,5 +1,10 @@
 class ApiConstants {
   static const String baseUrl = "https://vcare.integration25.com/api/";
+  static const String newsBaseUrl ="https://newsapi.org/v2/";
+
+  static const String news="everything";
+
+  //?q=egypt&apiKey=bd0a13ced182424fa15758562eba2821
 
   static const String login = "auth/login";
   static const String signUp = "auth/register";
