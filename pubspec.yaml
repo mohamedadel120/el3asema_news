@@ -68,6 +68,8 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   #Customize Flutter's default white native splash screen with background color and splash image.
   flutter_native_splash: ^2.4.4
+  #Converts already built widgets into skeleton loaders with no extra effort.
+  skeletonizer: ^1.4.3
 
 
 dev_dependencies:

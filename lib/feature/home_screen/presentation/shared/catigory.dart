@@ -1,19 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:el3asema_news/core/const/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'package:el3asema_news/feature/art_screen/presentation/screen/art.dart';
-import 'package:el3asema_news/feature/movie_screen/presentation/screen/movie_screen.dart';
-import 'package:el3asema_news/feature/sport_screen/presentation/screen/sport_screen.dart';
+import 'package:el3asema_news/core/const/colors.dart';
+
 
 class Catigory extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
- const Catigory({
-    super.key,
+   int currentIndex ;
+  final List <Widget> screens;
+  final List <String> categories;
+   Catigory({
+    Key? key,
     required this.screenHeight,
     required this.screenWidth,
-  });
+    required this.currentIndex,
+    required this.screens,
+    required this.categories,
+  }) : super(key: key);
 
 
 
@@ -24,20 +28,7 @@ class Catigory extends StatefulWidget {
 }
 
 class _CatigoryState extends State<Catigory> {
-     int currentIndex = 0;
 
-  final List<String> categories = [
-    "All",
-    "Movies",
-    "Art",
-    "Sport",
-  ];
-
-  final List<Widget> screens = [
-    const MoviesScreen(),
-    const ArtScreen(),
-    const SportScreen(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,14 +36,14 @@ class _CatigoryState extends State<Catigory> {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: widget.screenWidth * 0.02),
           child: ListView.separated(
-            itemCount: screens.length + 1, // +1 for "All"
+            itemCount: widget.screens.length + 1, // +1 for "All"
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => InkWell(
               onTap: () {
                 setState(() {
-                 currentIndex = index;
+                widget.currentIndex = index;
                 });
               },
               child: Container(
@@ -61,7 +52,7 @@ class _CatigoryState extends State<Catigory> {
                     ? widget.screenWidth * 0.1
                     : widget.screenWidth * 0.25, // Responsive width
                 decoration: BoxDecoration(
-                  color: index == currentIndex
+                  color: index == widget.currentIndex
                       ? AppColors.primaryColor
                       : AppColors.primaryColor.withOpacity(0.5),
                   borderRadius: index == 0
@@ -70,11 +61,11 @@ class _CatigoryState extends State<Catigory> {
                 ),
                 child: Center(
                   child: Text(
-                    categories[index],
+                   widget.categories[index],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: index == currentIndex
+                      fontWeight: index == widget.currentIndex
                           ? FontWeight.bold
                           : FontWeight.w400,
                       fontSize: widget.screenWidth * 0.03, // Responsive font size

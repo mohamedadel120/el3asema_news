@@ -18,6 +18,7 @@ class NewsResponse {
       _$NewsResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$NewsResponseToJson(this);
+
 }
 
 @JsonSerializable()

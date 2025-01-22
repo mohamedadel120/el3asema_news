@@ -19,7 +19,7 @@ class AppRouter {
                   child: const SignInScreen(),
                 ));
       case Routes.signUpScreen:
-        return MaterialPageRoute(builder: (_) => Placeholder());
+        return MaterialPageRoute(builder: (_) => const Placeholder());
       case Routes.bottomNavScreen:
         return MaterialPageRoute(builder: (_) => const FinalView());
       case Routes.homeScreen:

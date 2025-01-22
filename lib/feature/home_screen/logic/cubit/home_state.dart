@@ -1,5 +1,4 @@
 import 'package:el3asema_news/core/networking/api_error_model.dart';
-import 'package:el3asema_news/feature/home_screen/data/models/news_response.dart';
 
 abstract class HomeStates {}
 

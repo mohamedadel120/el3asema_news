@@ -1,12 +1,11 @@
+import 'package:el3asema_news/core/const/colors.dart';
 import 'package:el3asema_news/core/const/imports.dart';
 import 'package:el3asema_news/core/di/dependency_injection.dart';
 import 'package:el3asema_news/core/helpers/spacing.dart';
 import 'package:el3asema_news/feature/art_screen/presentation/screen/art.dart';
-import 'package:el3asema_news/feature/home_screen/data/models/local_models/news.dart';
 import 'package:el3asema_news/feature/home_screen/logic/cubit/home_cubit.dart';
 import 'package:el3asema_news/feature/home_screen/logic/cubit/home_state.dart';
 import 'package:el3asema_news/feature/home_screen/presentation/screen/details_screen.dart';
-import 'package:el3asema_news/feature/home_screen/presentation/shared/catigory.dart';
 import 'package:el3asema_news/feature/home_screen/presentation/shared/item_news.dart';
 import 'package:el3asema_news/feature/movie_screen/presentation/screen/movie_screen.dart';
 import 'package:el3asema_news/feature/sport_screen/presentation/screen/sport_screen.dart';
@@ -51,9 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: BlocBuilder<HomeCubit, HomeStates>(
           builder: (context, state) {
             final cubit = context.read<HomeCubit>();
-            if (state is HomeLoadingState) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is HomeErrorState) {
+            if (state is HomeErrorState) {
               return Center(
                 child: Text(
                   state.apiErrorModel.errors.toString(),
@@ -62,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
 
-            return _buildBody(cubit, context, screenWidth, screenHeight);
+            return 
+                 _buildBody(cubit, context, screenWidth, screenHeight);
           },
         ),
       ),
@@ -113,10 +111,54 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(height: screenHeight * 0.02), // Responsive spacing
 
         // Category Selector
-        Catigory(
-          screenHeight: screenHeight,
-          screenWidth: screenWidth,
+        Container(
+          height: screenHeight * 0.03, // Responsive height
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: ListView.separated(
+            itemCount: screens.length + 1, // +1 for "All"
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+                width: index == 0
+                    ? screenWidth * 0.1
+                    : screenWidth * 0.25, // Responsive width
+                decoration: BoxDecoration(
+                  color: index == currentIndex
+                      ? AppColors.primaryColor
+                      : AppColors.primaryColor.withOpacity(0.5),
+                  borderRadius: index == 0
+                      ? BorderRadius.circular(20)
+                      : BorderRadius.circular(5),
+                ),
+                child: Center(
+                  child: Text(
+                    categories[index],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: index == currentIndex
+                          ? FontWeight.bold
+                          : FontWeight.w400,
+                      fontSize: screenWidth * 0.03, // Responsive font size
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            separatorBuilder: (context, index) =>
+                VerticalDivider(color: Colors.grey[400], thickness: 1),
+          ),
         ),
+        verticalSpace(screenHeight * 0.02), // Responsive spacing
         Divider(color: Colors.grey[400], thickness: 1),
         verticalSpace(screenHeight * 0.02), // Responsive spacing
 
@@ -145,19 +187,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Responsive grid for "All" news
+
   Widget _buildHomeList(
       HomeCubit cubit, BuildContext context, double screenWidth) {
     return ListView.builder(
-      itemCount: cubit
-          .newsResponse?.articles.length??5, // Assuming you have a 'news' list
+      itemCount: cubit.newsResponse?.articles.length ??
+          5, // Assuming you have a 'news' list
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) => ItemNews(
-        cubit:cubit,
+        cubit: cubit,
         index: index,
         press: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ArticleDetailsScreen(news: news[index]),
+            builder: (context) =>
+                ArticleDetailsScreen(cubit: cubit, index: index),
           ),
         ),
       ),

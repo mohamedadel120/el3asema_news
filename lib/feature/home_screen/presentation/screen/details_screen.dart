@@ -1,91 +1,18 @@
-/* // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:el3asema_news/core/const/imports.dart';
-import 'package:el3asema_news/core/shared_widget/counter_fav_btn.dart';
-
-import 'package:el3asema_news/feature/home_screen/data/models/local_models/news.dart';
-import 'package:el3asema_news/feature/home_screen/presentation/shared/description.dart';
-import 'package:el3asema_news/feature/home_screen/presentation/shared/new_title_with_image.dart';
-
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({
-    super.key,
-    required this.news,
-  });
-  final News news;
-
-  @override
-  Widget build(BuildContext context) {
-    void sizes = AppSizes().initSizes(context);
-    final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      // each product have a color
-      backgroundColor: const Color(0xFFEEEEEE),
-      appBar: AppBar(
-        actions: [
-          SizedBox(width: size.width * 0.09),
-        ],
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: Center(child: Image.asset("assets/images/logo.png", scale: 20)),
-        backgroundColor: Colors.grey[200],
-        elevation: 0,
-        leading: IconButton(
-          icon: Image.asset(
-            'assets/icons/back.png',
-            //colorFilter:
-            //colorFilter.mode(Color(0xFF000000), BlendMode.srcIn),
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: [
-                ProductTitleWithImage(news: news),
-                Container(
-                  margin: EdgeInsets.only(top: size.height * 0.3),
-                  padding: const EdgeInsets.only(
-                    left: 50,
-                    right: 50,
-                  ),
-                  // height: 500,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 50 / 2),
-                      Description(news: news),
-                      const SizedBox(height: 50 / 2),
-                      const CounterWithFavBtn(),
-                      const SizedBox(height: 50 / 2),
-                    ],
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
- */
-import 'package:el3asema_news/feature/home_screen/data/models/local_models/news.dart';
+import 'package:el3asema_news/feature/home_screen/logic/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:el3asema_news/core/const/size_config.dart';
 import 'package:el3asema_news/core/shared_widget/counter_fav_btn.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleDetailsScreen extends StatelessWidget {
-  const ArticleDetailsScreen({super.key, required this.news});
-  final News news; // Assuming "Movies" represents articles here.
+  const ArticleDetailsScreen({
+    super.key, 
+    required this.cubit, 
+    required this.index
+  });
+
+  final HomeCubit cubit; // Assuming "Movies" represents articles here.
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -134,14 +61,15 @@ class ArticleDetailsScreen extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(news.image),
+              image: NetworkImage(
+                  cubit.newsResponse?.articles[index].urlToImage ?? ""),
               fit: BoxFit.cover,
             ),
           ),
         ),
         Positioned(
           bottom: 20,
-          left: 20,
+          left: 5,
           child: Container(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -152,11 +80,12 @@ class ArticleDetailsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              news.title,
-              style: const TextStyle(
+              _formatTextWithLineBreaks(cubit.newsResponse?.articles[index].title ?? ""),
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
@@ -173,7 +102,7 @@ class ArticleDetailsScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           Text(
-            news.description * 10,
+            _formatTextWithLineBreaks(cubit.newsResponse?.articles[index].description ?? ""),
             style: const TextStyle(
               fontSize: 16,
               color: Colors.black87,
@@ -196,5 +125,22 @@ class ArticleDetailsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Formats the text with line breaks after every 6 words.
+  String _formatTextWithLineBreaks(String text, {int wordLimit = 6}) {
+    List<String> words = text.split(' ');
+    StringBuffer formattedText = StringBuffer();
+
+    for (int i = 0; i < words.length; i++) {
+      formattedText.write(words[i]);
+      if ((i + 1) % wordLimit == 0 && i != words.length - 1) {
+        formattedText.write('\n');
+      } else {
+        formattedText.write(' ');
+      }
+    }
+
+    return formattedText.toString().trim();
   }
 }
